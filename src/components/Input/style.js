@@ -34,6 +34,19 @@ export const Container = styled.div`
             color: ${({ theme }) => theme.COLORS.GRAY_100};
         }
 
+        &:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0px 1000px ${({ theme }) => theme.COLORS.BACKGROUND_900} inset !important; /* Cobrir a borda com uma sombra branca */
+            -webkit-text-fill-color: #999591 !important; /* Restaurar a cor do texto para o padrão */
+            transition: background-color 5000s ease-in-out 0s !important; /* Desativar transição de cor de fundo */
+            -webkit-border-radius: 1rem;
+        }
+
+/* Adicionalmente, para alguns navegadores como o Firefox */
+&:-moz-autofill {
+  -moz-box-shadow: 0 0 0px 1000px white inset !important;
+  -moz-text-fill-color: initial !important;
+}
+
     }
 
     > svg {
