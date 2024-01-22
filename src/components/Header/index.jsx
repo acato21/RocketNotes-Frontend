@@ -6,7 +6,7 @@ import { useAuth } from "../../hook/auth";
 
 export function Header(){
 
-    const { user } = useAuth();
+    const { user, signOut } = useAuth();
     const name = user.name
 
     return(
@@ -22,7 +22,7 @@ export function Header(){
             </User>
 
             <button>
-                <IoMdPower />
+                <IoMdPower onClick={signOut} />
             </button>
         </Container>
 
