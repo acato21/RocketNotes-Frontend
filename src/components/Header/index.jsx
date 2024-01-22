@@ -2,7 +2,12 @@ import { IoMdPower } from "react-icons/io";
 import { Container, User } from "./style";
 import Profile from "../../img/Profile.png";
 
+import { useAuth } from "../../hook/auth";
+
 export function Header(){
+
+    const { user } = useAuth();
+    const name = user.name
 
     return(
 
@@ -12,7 +17,7 @@ export function Header(){
 
                 <div>
                     <span>Bem vindo,</span>
-                    <p>Igor Gabriel</p>
+                    <p>{name}</p>
                 </div>
             </User>
 
