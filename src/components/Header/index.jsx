@@ -3,11 +3,19 @@ import { Container, User } from "./style";
 import Profile from "../../img/Profile.png";
 
 import { useAuth } from "../../hook/auth";
+import { useNavigate } from "react-router-dom";
 
 export function Header(){
 
     const { user, signOut } = useAuth();
     const name = user.name
+
+    const navigate = useNavigate();
+
+    function handleSignOut(){
+        signOut();
+        navigate("/")
+    }
 
     return(
 
@@ -22,7 +30,7 @@ export function Header(){
             </User>
 
             <button>
-                <IoMdPower onClick={signOut} />
+                <IoMdPower onClick={handleSignOut} />
             </button>
         </Container>
 
