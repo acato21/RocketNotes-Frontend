@@ -3,6 +3,7 @@ import { api } from "../services/api";
 
 const AuthContext = createContext({});
 
+// eslint-disable-next-line react/prop-types
 function AuthProvider({children}){
     const [data, setData] = useState("");
 
@@ -12,7 +13,7 @@ function AuthProvider({children}){
 
         const { user, token } = response.data;
 
-        api.defaults.headers.authorization = `Bearer ${token}`
+        api.defaults.headers.common['Authorization']  = `Bearer ${token}`
         setData({user, token})
 
         localStorage.setItem("@rocketnotes:user", JSON.stringify(user));
@@ -33,6 +34,38 @@ function AuthProvider({children}){
 
         setData({})
     }
+    
+    async function updateProfile({ user, avatarFile }){
+
+        console.log(avatarFile)
+
+        if(avatarFile){
+            const fileUploadForm = new FormData();
+            fileUploadForm.append("avatar", avatarFile);
+
+            const response = await api.patch("/user/avatar", fileUploadForm);
+            user.avatar = response.data.avatar;
+
+            console.log(user)
+        }
+
+        try {
+            await api.put("/user/update", user)
+            localStorage.setItem("@rocketnotes:user", JSON.stringify(user));
+
+            setData({user, token: data.token})
+
+            alert("perfil atualizado!")
+
+        } catch (error){
+            if(error.response){
+                alert(error.response.data.message);
+            } else {
+                alert("Não foi possível atualizar o perfil!")
+            }
+        }
+
+    }
 
     useEffect(() => {
         const user = localStorage.getItem("@rocketnotes:user")
@@ -40,7 +73,7 @@ function AuthProvider({children}){
 
         if(user && token){
 
-            api.defaults.headers.authorization = `Bearer ${token}`
+            api.defaults.headers.common['Authorization'] = `Bearer ${token}`
 
             setData({
                 token,
@@ -50,10 +83,15 @@ function AuthProvider({children}){
 
         console.log(data)
         
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return(
-        <AuthContext.Provider value={{signIn, signOut, user: data.user}}>
+        <AuthContext.Provider value={{signIn, 
+        signOut, 
+        updateProfile,
+        user: data.user}}
+        >
             {children}
         </AuthContext.Provider>
     )
@@ -67,4 +105,5 @@ function useAuth(){
     return context;
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export {useAuth, AuthProvider}

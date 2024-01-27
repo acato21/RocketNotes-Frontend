@@ -3,7 +3,7 @@
 import { Container } from "./style";
 import { FiPlus, FiX } from 'react-icons/fi'
 
-export function NewItem({ isNew, value, OnClick, ...rest }){
+export function NewItem({ isNew = false, value, OnClick, ...rest }){
 
     return(
 
@@ -12,13 +12,12 @@ export function NewItem({ isNew, value, OnClick, ...rest }){
                 type="text"
                 value={value} 
                 readOnly={!isNew} 
-                placeholder="Novo link"
                 {...rest} 
             />
 
             <button 
                 type="button"
-                Onclick={OnClick}
+                onClick={OnClick}
                 className={isNew ? "button-add" : "button-delete"}
             >
                 {isNew ? <FiPlus /> : <FiX /> }
