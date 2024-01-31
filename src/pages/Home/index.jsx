@@ -9,6 +9,7 @@ import { Note } from "../../components/Note";
 import { TextButton } from "../../components/TextButton";
 
 import { api } from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 export function Home(){
     
@@ -17,6 +18,7 @@ export function Home(){
     const [search, setSearch] = useState("");
     const [note, setNote] = useState([]);
     const [all, setAll] = useState([]);
+    const navigate = useNavigate();
     
     function handleTagSelected(tagName){
 
@@ -35,6 +37,10 @@ export function Home(){
             setTagsSelected(prevState => [...prevState, tagName]);
         }
 
+    }
+
+    function handleNote(id){
+        navigate(`/note/${id}`)
     }
 
     useEffect(() => {
@@ -60,12 +66,12 @@ export function Home(){
         async function getTags(){
             const tag = await api.get("/note/tags");
             setTags(tag.data);
-            setAll(tags.map(tag => tag.name))
+            setAll(tag.data.map(tag => tag.name))
         }
 
         getTags();
 
-    }, [tags])
+    }, [])
 
     return(
 
@@ -116,6 +122,7 @@ export function Home(){
                                 <Note 
                                     key={note.id}
                                     data={note}
+                                    onClick={() => handleNote(note.id)}
                                 />
                             )
                         })

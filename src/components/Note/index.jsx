@@ -2,10 +2,10 @@
 import { Container } from "./style";
 import { Tags } from "../Tags";
 
-export function Note({ data }){
+export function Note({ data, onClick }){
 
     return(
-        <Container>
+        <Container onClick={onClick}>
             <span>{data.title}</span>
             
             {

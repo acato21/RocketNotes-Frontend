@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import { Container, Content, Links } from "./style";
 import { Header } from "../../components/Header";
 import { TextButton } from "../../components/TextButton";
@@ -5,7 +8,29 @@ import { Section } from "../../components/Section";
 import { Tags } from "../../components/Tags";
 import { Button } from "../../components/Button";
 
+import { api } from "../../services/api";
+
 export function ShowNote(){
+
+    const params = useParams();
+
+    const [note, setNote] = useState({});
+    const [links, setLinks] = useState([]);
+    const [tags, setTags] = useState([]);
+
+    useEffect(() => {
+
+        async function fetchNote() {
+            const response = await api.get(`/note/show/${params.id}`);
+            setNote(response.data.note);
+            setLinks(response.data.links);
+            setTags(response.data.tags)
+
+        };
+
+        fetchNote();
+
+    },[])
 
     return(
 
@@ -16,21 +41,31 @@ export function ShowNote(){
                 <Content>
                     <TextButton title="Excluir a nota"/>
 
-                    <h1>Introdução ao React</h1>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                    </p>
+                    <h1>{note.title}</h1>
+
+                    <p>{note.description}</p>
 
                     <Section title="Links úteis">
                         <Links>
                             <li><a href="#">https://www.rocketseat.com.br/</a></li>
-                            <li><a href="#">https://www.rocketseat.com.br/</a></li>
+                            {
+                                links && links.map(link => {
+                                    return(
+                                        <li><a href={link.url} target="_blank">{link.url}</a></li>
+                                    )
+                                })
+                            }
                         </Links>
                     </Section>
 
                     <Section title="Marcadores">
-                            <Tags title="nodejs" />
-                            <Tags title="express" />
+                    {
+                                tags && tags.map(tag => {
+                                    return(
+                                        <Tags title={tag.name} />
+                                    )
+                                })
+                            }
                     </Section>
 
                     <Button title="Voltar" />
