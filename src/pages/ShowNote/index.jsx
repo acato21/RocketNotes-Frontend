@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import { Container, Content, Links } from "./style";
 import { Header } from "../../components/Header";
@@ -13,10 +13,16 @@ import { api } from "../../services/api";
 export function ShowNote(){
 
     const params = useParams();
+    const navigate = useNavigate();
 
     const [note, setNote] = useState({});
     const [links, setLinks] = useState([]);
     const [tags, setTags] = useState([]);
+
+    async function deleteNote(){
+        await api.delete(`/note/delete/${params.id}`)
+        navigate("/")
+    }
 
     useEffect(() => {
 
@@ -39,7 +45,7 @@ export function ShowNote(){
             
             <main>
                 <Content>
-                    <TextButton title="Excluir a nota"/>
+                    <TextButton title="Excluir a nota" onClick={deleteNote}/>
 
                     <h1>{note.title}</h1>
 
