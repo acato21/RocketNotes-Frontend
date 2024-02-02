@@ -8,8 +8,11 @@ import { useState } from "react";
 import { useAuth } from "../../hook/auth";
 import { api } from "../../services/api";
 
+import { useNavigate } from "react-router-dom";
+
 export function Profile(){
     const { user, updateProfile } = useAuth();
+    const navigate = useNavigate();
 
     const [name, setName] = useState(user.name);
     const [email, setEmail] = useState(user.email);
@@ -49,7 +52,7 @@ export function Profile(){
 
         <Container>
             <header>
-                <a href="/"><FiArrowLeft/></a>
+                <a onClick={() => navigate(-1)}><FiArrowLeft/></a>
             </header>
 
         <Form>

@@ -71,7 +71,7 @@ export function CreateNote(){
                     <header>
                         <h1>Criar notas</h1>
 
-                        <TextButton to="/" title="voltar" />
+                        <TextButton onClick={() => navigate(-1)} title="voltar" />
                     </header>
 
                     <Input 

@@ -53,11 +53,16 @@ export function ShowNote(){
 
                     <Section title="Links úteis">
                         <Links>
-                            <li><a href="#">https://www.rocketseat.com.br/</a></li>
                             {
                                 links && links.map(link => {
                                     return(
-                                        <li><a href={link.url} target="_blank">{link.url}</a></li>
+                                        <li key={link.id} >
+                                            <a 
+                                                href={link.url} 
+                                            >
+                                                {link.url}
+                                            </a>
+                                        </li>
                                     )
                                 })
                             }
@@ -68,13 +73,16 @@ export function ShowNote(){
                     {
                                 tags && tags.map(tag => {
                                     return(
-                                        <Tags title={tag.name} />
+                                        <Tags 
+                                        key={tag.id}
+                                        title={tag.name} 
+                                        />
                                     )
                                 })
                             }
                     </Section>
 
-                    <Button title="Voltar" />
+                    <Button title="Voltar" onClick={() => navigate(-1)}/>
                 </Content>
             </main>
         </Container>

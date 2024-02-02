@@ -134,7 +134,7 @@ export function Home(){
             </Content>
 
             <CreateNote to="/create" >
-                <p><IoMdAdd/> Criar nota</p>
+                <p><IoMdAdd/>Criar nota</p>
             </CreateNote>
         </Container>
 
