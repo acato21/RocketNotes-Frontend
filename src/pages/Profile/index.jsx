@@ -52,7 +52,7 @@ export function Profile(){
 
         <Container>
             <header>
-                <a onClick={() => navigate(-1)}><FiArrowLeft/></a>
+                <a onClick={() => navigate("/")}><FiArrowLeft/></a>
             </header>
 
         <Form>
